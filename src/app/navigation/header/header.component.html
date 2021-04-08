@@ -1,0 +1,44 @@
+<mat-toolbar color="accent" class="expanded-toolbar">
+  <span>
+  	<div class="example-button-container">
+        <button mat-button routerLink="/" mat-fab color="primary">
+          <mat-icon>home</mat-icon>
+        </button>
+        <button mat-button routerLink="/" color="warn" class="logo">
+          {{title}}
+        </button>
+  	</div>
+  </span>
+  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+  	<mat-icon aria-hidden="false" aria-label="user verified icon">verified_user</mat-icon>
+    <button mat-button routerLink="/login" *ngIf="!currentUser">
+      <mat-icon>power_settings_new</mat-icon>
+      Login
+    </button>
+    <span *ngIf="currentUser">
+  		<span>Welcome, {{ currentUser.firstName }}
+	  		<button mat-button *ngIf="!isAdmin">You're a Normal User</button>
+	  		<button mat-button *ngIf="isAdmin">You're an Admin User</button>
+  		</span>
+  		<button mat-button (click)="logout()">
+  			<mat-icon>exit_to_app</mat-icon>
+  			Logout
+		</button>
+  	</span>
+    
+    
+  </div>
+  <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-menu x-position="before" #menu="matMenu">
+  <button mat-button routerLink="/login" *ngIf="!currentUser">
+      <mat-icon>power_settings_new</mat-icon>
+      Login
+  </button>
+  <button mat-button (click)="logout()" *ngIf="currentUser">
+      <mat-icon>exit_to_app</mat-icon>
+      Logout
+   </button>
+</mat-menu>

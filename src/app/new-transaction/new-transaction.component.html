@@ -1,0 +1,99 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+    	<h2>New Transaction</h2>
+      	<mat-radio-group aria-label="Select an option" formControlName="type">
+  			<mat-radio-button value="New" [checked]="true" (change)="changeTransactionType($event)">New</mat-radio-button>
+  			<mat-radio-button value="Existing" (change)="changeTransactionType($event)">Existing</mat-radio-button>
+		</mat-radio-group>
+        <mat-form-field>
+            <mat-label for="reference">Reference</mat-label>
+            <input matInput type="text" formControlName="reference" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.reference.errors }" />
+            <mat-error *ngIf="submitted && f.reference.errors">
+                <mat-error *ngIf="f.reference.errors.required">Reference number is required</mat-error>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-group formGroupName="customer">
+	        <mat-form-field>
+	            <mat-label for="customerNumber">Customer Number</mat-label>
+	            <input matInput type="text" formControlName="id" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && id.errors }" (focusout)="onSelectingCustomerNumber(id)" />
+	            <mat-error *ngIf="customerNotFound && id.errors">
+	                <mat-error *ngIf="id.errors.required">Customer Number is required</mat-error>
+	                <mat-error *ngIf="id.errors.required">Not a valid customer Number</mat-error>
+	            </mat-error>
+	        </mat-form-field>
+
+	        <mat-form-field>
+	            <mat-label for="customerName">Customer Name</mat-label>
+	            <input matInput type="text" formControlName="name" autocomplete="off" [ngClass]="{ 'is-invalid': customerNotFound && name.errors }"/>
+	            <mat-error *ngIf="customerNotFound && name.errors">
+	                <mat-error *ngIf="name.errors.required">Customer Number is required</mat-error>
+	                <mat-error *ngIf="name.errors.required">Not a valid customer Number</mat-error>
+	            </mat-error>
+	        </mat-form-field>
+
+			<mat-form-field>
+	            <mat-label for="address">Address</mat-label>
+	            <input matInput type="text" formControlName="address" autocomplete="off" [ngClass]="{ 'is-invalid': customerNotFound && address.errors }"/>
+	            <mat-error *ngIf="submitted && address.errors">
+	                <mat-error *ngIf="address.errors.required">Address is required</mat-error>
+	            </mat-error>
+	        </mat-form-field>
+
+	        <mat-form-field>
+	            <mat-label for="customerPhone">Customer Phone Number</mat-label>
+	            <input matInput type="number" formControlName="phoneNumber" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && phoneNumber.errors }"/>
+	            <mat-error *ngIf="submitted && phoneNumber.errors">
+	                <mat-error *ngIf="phoneNumber.errors.required">Customer Phone Number is required</mat-error>
+	            </mat-error>
+	        </mat-form-field>
+		</mat-form-group>
+        <mat-form-field>
+            <mat-label for="transferAmt">Transfer Amount</mat-label>
+            <input matInput type="number" formControlName="transferAmount" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.transferAmount.errors }" />
+            <mat-error *ngIf="submitted && f.transferAmount.errors">
+                <mat-error *ngIf="f.transferAmount.errors.required">Transfer Amount required</mat-error>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label for="transferCurrency">Transfer Currency</mat-label>
+			<mat-select formControlName="currency">
+				<mat-option *ngFor="let currency of currencies" [value]="currency">
+						{{currency}}
+				</mat-option>
+			</mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label for="benBank">Beneficiary Bank</mat-label>
+            <input matInput type="text" formControlName="beneficiaryBank" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.beneficiaryBank.errors }" specialIsAlphaNumeric/>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label for="benAccNum">Beneficiary Account Number</mat-label>
+            <input matInput type="text" formControlName="beneficiaryAcc" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.beneficiaryAcc.errors }" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label for="cardDetails">Card Details</mat-label>
+            <input matInput maxlength="19" type="tel" formControlName="cardDetails" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.cardDetails.errors }" matTooltip="Card must of 16 digits and can have space for every 4 digits"/>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label for="region">Region</mat-label>
+			<mat-select formControlName="region">
+				<mat-option *ngFor="let region of regions" [value]="region">
+						{{region}}
+				</mat-option>
+			</mat-select>
+        </mat-form-field>
+
+        <div>
+            <button id="register-btn" mat-raised-button color="accent" [disabled]="loading || !transactionForm.valid">
+                <span *ngIf="loading" class="loading"></span>
+                <span>Submit</span>
+            </button>
+        </div>
+    </form>
+  </mat-card-content>
+</mat-card>

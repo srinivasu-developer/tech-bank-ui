@@ -1,0 +1,17 @@
+.expanded-toolbar {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+	display: inline-block;
+	color: #fff;
+	font-size: 18px;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: center;
+  width: 120px;
+}
+

@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
-import { AuthenticationService } from './_services';
-import { User, Role } from './_models';
+import { User, Role } from '../../_models';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../../_services';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
-export class AppComponent {
-  title = 'tech-bank';
+export class HeaderComponent {
 
+  title = 'TechBank';
   currentUser?: User | null;
 
     constructor(

@@ -1,0 +1,14 @@
+section{
+	background: #f8f8f8;
+    border-radius: 3px;
+    text-align: center;
+    margin: 0.5em;
+    position: relative !important;
+    padding-bottom: 5px; 
+}
+
+button{
+	padding-left: 50px;
+	padding-right: 50px; 
+	margin: 0.3em;
+}
