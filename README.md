@@ -9,23 +9,13 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## App details:
 
-credentials:
-
-**normal user:-**
-
-username: user
-
-password: user
-
-
-**admin user:-**
-
-username: admin
-
-password: admin
+**Credentials:**
+| **Username**  | **Password** |    **Role**   |
+| --------- | -------- | --------- |
+| user  | user  | Normal |
+| admin  | admin  | Admin |
 
 '/admin' page can be only accessed by admin users
-
 
 
 **Customer details**:
