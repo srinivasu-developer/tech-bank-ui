@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Observable, of, throwError } from 'rxjs';
 
 import { User, Role, Customer, Transaction, Currency } from '../_models';
 
@@ -40,23 +41,16 @@ export class TransactionService {
         return reference;
     }
 
-    postTransaction(transaction: Transaction) {
+    postTransaction(transaction: Transaction): any {
         return this.http.post<any>(`/transactions`, transaction).subscribe(data => {
             this.transactions.push(data.value);
             this.router.navigate(['/view-transactions']);
         });
     }
 
-    getTransactions(): Transaction[] {
+    getTransactions(): any {
         return this.transactions;
     }
-
-    /*postTransaction() {
-        return this.http.post<Transaction>(`/transaction/${transaction.reference}`, transaction).subscribe(data =>{
-            this.transactions.push(data);
-        });
-    }*/
-
 
     createNewTransaction(): Transaction {
         const pipe = new DatePipe('en-US');

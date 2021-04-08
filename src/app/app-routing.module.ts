@@ -14,16 +14,14 @@ const routes: Routes = [
         path: '',
         component: HomeComponent,
         canActivate: [AuthGuard],
-        children: [
-        {
-        	path: 'new-transaction',
-			component: NewTransactionComponent,
-        },
-        {
-        	path: 'view-transactions',
+        children: [{
+	        path: 'new-transaction',
+	        component: NewTransactionComponent,
+	    },
+	    {
+	        path: 'view-transactions',
 			component: TransactionListComponent,
-        },
-        ]
+	    }]
     },
     {
         path: 'admin',

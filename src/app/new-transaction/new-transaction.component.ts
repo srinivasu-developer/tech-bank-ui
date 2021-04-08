@@ -18,16 +18,15 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 })
 export class NewTransactionComponent implements OnInit {
 
-	loading = false;
-    submitted = false;
-    error?: string;
-    customerNotFound = false;
-    transactionForm = this.buildTransactionForm();
-    regions = ['Port Louis', 'Curepipe', 'Vacoas', 'Port Mathurin'];
-    currencies = [Currency.AED, Currency.EUR, Currency.CHF, Currency.MUR, Currency.USD];
+  loading = false;
+  submitted = false;
+  error?: string;
+  customerNotFound = false;
+  transactionForm = this.buildTransactionForm();
+  regions = ['Port Louis', 'Curepipe', 'Vacoas', 'Port Mathurin'];
+  currencies = [Currency.AED, Currency.EUR, Currency.CHF, Currency.MUR, Currency.USD];
 
   @Output() change?: EventEmitter<MatRadioChange>;
-
 
   constructor(
         private formBuilder: FormBuilder,
@@ -37,41 +36,40 @@ export class NewTransactionComponent implements OnInit {
 
 
   ngOnInit(): void {
-  	this.buildTransactionForm();
+    this.buildTransactionForm();
   }
 
-
   buildTransactionForm(): any {
-  	console.log('building form');
-  	this.transactionForm = this.formBuilder.group({
-        type: [''],
+  	this.transactionForm = this.formBuilder.group(
+  	{
+     	type: [''],
         reference: [this.transactionService.generateReference()],
         customer: this.formBuilder.group({
         	id: ['', Validators.required],
-        	name: [{value: '', disabled: true}, Validators.required],
-        	address: [{value: '', disabled: true}, Validators.required],
-        	phoneNumber: [{value: '', disabled: true}, Validators.required],
+        	name: [ {value: '', disabled: true}, Validators.required],
+        	address: [ {value: '', disabled: true}, Validators.required],
+        	phoneNumber: [ {value: '', disabled: true}, Validators.required],
 
-        }),
+        } ),
 		transferAmount: ['', Validators.required],
     	currency: ['', Validators.required],
     	beneficiaryBank: ['', Validators.required],
     	beneficiaryAcc: ['', Validators.required],
     	paymentDetails: ['', Validators.required],
-    	cardDetails: ['', [Validators.required, Validators.pattern(/^\d{4}\s?\d{4}\s?\d{4}\s?\d{4}$/)]],
+    	cardDetails: ['', [ Validators.required, Validators.pattern(/^\d{4}\s?\d{4}\s?\d{4}\s?\d{4}$/)] ],
     	region: ['', Validators.required],
     });
   }
 
-  onSelectingCustomerNumber(number: any) {
+  onSelectingCustomerNumber(number: any): any {
   	const { customer } = this.transactionForm.value;
   	this.customerService.getByName(customer.id).subscribe({
-  		next: (data) => {
+  		next: (data: any) => {
   			this.name.setValue(data.name);
   			this.address.setValue(data.address);
   			this.phoneNumber.setValue(data.phoneNumber);
   		},
-  		error: (error) => {
+  		error: (error: any) => {
   			this.customerNotFound = true;
 			  this.name.setValue('No customer name found');
   			this.address.setValue('No address found');
@@ -80,11 +78,14 @@ export class NewTransactionComponent implements OnInit {
   	});
   }
 
-  onSubmit() {
+  onSubmit(): void {
+  	if (this.transactionForm.invalid) {
+            return;
+	}
   	this.transactionService.postTransaction(this.transactionForm);
   }
 
-  changeTransactionType(mrChange: MatRadioChange) {
+  changeTransactionType(mrChange: MatRadioChange): void {
   	if (mrChange.value === 'Existing') {
   		this.f.reference.setValue('');
   	} else {
@@ -92,7 +93,7 @@ export class NewTransactionComponent implements OnInit {
   	}
   }
 
-  get f() { return this.transactionForm?.controls; }
+  get f(): any { return this.transactionForm?.controls; }
 
 
   get id(): any {

@@ -24,13 +24,15 @@ export class FakeBackendInterceptor implements HttpInterceptor{
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const { url, method, headers, body , params} = request;
         return of(null)
-            .pipe(mergeMap(handleRoute()))
-            .pipe(materialize()) // call materialize and dematerialize to ensure delay even if an error is thrown
-            .pipe(delay(500)).pipe(dematerialize());
+            .pipe(mergeMap(handleRoute))
+            .pipe(materialize()) // call materialize and dematerialize to ensure delay even if an error is thrown (https://github.com/Reactive-Extensions/RxJS/issues/648)
+            .pipe(delay(500))
+            .pipe(dematerialize());
 
-        function handleRoute(): any {
+        function handleRoute() {
             switch (true) {
                 case url.endsWith('/users/authenticate') && method === 'POST':
+                    console.log('coming here')
                     return authenticate();
                 case url.endsWith('/users') && method === 'GET':
                     return getUsers();
@@ -49,7 +51,7 @@ export class FakeBackendInterceptor implements HttpInterceptor{
         }
 
         // route functions
-        function authenticate(): any {
+        function authenticate() {
             const { username, password } = body;
             const user = users.find(x => x.username === username && x.password === password);
             if (!user) { return error('Username or password is incorrect'); }
@@ -63,58 +65,59 @@ export class FakeBackendInterceptor implements HttpInterceptor{
             });
         }
 
-        function getUsers(): any {
+        function getUsers() {
             if (!isAdmin()) { return unauthorized(); }
             return ok(users);
         }
 
-        function getUserById(): any {
+        function getUserById() {
             if (!isLoggedIn()) { return unauthorized(); }
             // only admins can access other user records
             if (!isAdmin() && currentUser()?.id !== idFromUrl()) { return unauthorized(); }
             const user = users.find(x => x.id === idFromUrl());
-            return of(new HttpResponse({ status: 200, }));
+            return of(new HttpResponse({ status: 200, body }));
         }
 
-        function getCustomerByNumber(): any {
+        function getCustomerByNumber() {
             const customer = customers.find(x => x.id === idFromUrl());
             return ok(customer);
         }
 
         // helper functions
-        function ok(resp?: any): any {
-            return of(new HttpResponse({ status: 200, body }));
+        function ok(body: any) {
+            console.log('returning ok of ' + JSON.stringify(body))
+            return of(new HttpResponse({ status: 200, body }))
         }
 
-        function unauthorized(): any {
+        function unauthorized() {
             return throwError({ status: 401, error: { message: 'unauthorized' } });
         }
 
-        function error(message: any): any {
+        function error(message: any) {
             return throwError({ status: 400, error: { message } });
         }
 
-        function isLoggedIn(): any {
+        function isLoggedIn() {
             const authHeader = headers.get('Authorization') || '';
             return authHeader.startsWith('Bearer fake-jwt-token');
         }
 
-        function isAdmin(): any {
+        function isAdmin() {
             return isLoggedIn() && currentUser()?.role === Role.Admin;
         }
 
-        function currentUser(): any {
+        function currentUser() {
             if (!isLoggedIn()) { return; }
-            const id = parseInt(headers.get('Authorization')?.split('.')[1] || '');
+            const id = parseInt(headers.get('Authorization')?.split('.')[1] || '', 10);
             return users.find(x => x.id === id);
         }
 
-        function idFromUrl(): any {
+        function idFromUrl() {
             const urlParts = url.split('/');
-            return parseInt(urlParts[urlParts.length - 1]);
+            return parseInt(urlParts[urlParts.length - 1], 10);
         }
 
-        function postTransaction(): any {
+        function postTransaction() {
             return ok(body);
         }
     }

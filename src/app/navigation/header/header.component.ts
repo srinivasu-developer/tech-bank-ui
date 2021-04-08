@@ -21,11 +21,11 @@ export class HeaderComponent {
         this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     }
 
-    get isAdmin() {
+    get isAdmin(): any {
         return this.currentUser && this.currentUser.role === Role.Admin;
     }
 
-    logout() {
+    logout(): void {
         this.authenticationService.logout();
         this.router.navigate(['/login']);
     }

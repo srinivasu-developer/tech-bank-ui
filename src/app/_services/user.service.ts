@@ -8,11 +8,11 @@ import { User } from '../_models';
 export class UserService {
     constructor(private http: HttpClient) { }
 
-    getAll() {
+    getAll(): any {
         return this.http.get<User[]>(`${environment.apiUrl}/users`);
     }
 
-    getById(id: number) {
+    getById(id: number): any {
         return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
     }
 }
