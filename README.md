@@ -10,16 +10,26 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ## App details:
 
 credentials:
+
 **normal user:-**
+
 username: user
+
 password: user
 
+
 **admin user:-**
+
 username: admin
+
 password: admin
+
 '/admin' page can be only accessed by admin users
 
+
+
 **Customer details**:
+
 Have customers with IDs from 2345 to 2349 for searching customer in new transaction form
 
 ## Code scaffolding
