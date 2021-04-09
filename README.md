@@ -4,7 +4,23 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
+Get code from here and go to the folder. If you're running this project for first time, run 'npm install' command in the codebase directory to install required node modules for the application. 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## App details:
+
+**Credentials:**
+| **Username**  | **Password** |    **Role**   |
+| --------- | -------- | --------- |
+| user  | user  | Normal |
+| admin  | admin  | Admin |
+
+'/admin' page can be only accessed by admin users
+
+
+**Customer details**:
+
+Have customers with IDs from 2345 to 2349 for searching customer in new transaction form
 
 ## Code scaffolding
 
@@ -24,4 +40,4 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 ## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To get more help on the Angular CLI use `ng help` or reach out to the developer - [Srinivasu](mailto:srinivasu.iiitb@gmail.com) or message in [LinkedIn](https://www.linkedin.com/in/srinivasu-nakka-iiitb/)
