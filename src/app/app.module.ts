@@ -34,7 +34,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { NewTransactionComponent } from './new-transaction/new-transaction.component';
-import { ViewTransactionsComponent } from './view-transactions/view-transactions.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
 
@@ -46,7 +45,6 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
     HomeComponent,
     AdminComponent,
     NewTransactionComponent,
-    ViewTransactionsComponent,
     TransactionListComponent
   ],
   imports: [

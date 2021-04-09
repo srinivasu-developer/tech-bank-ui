@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigate([this.returnUrl]);
                 },
                 (error:any) => {
-                    console.log(error)
+                    console.error(error);
                     this.error = error;
                     this.loading = false;
                     this.loginInvalid = true;
